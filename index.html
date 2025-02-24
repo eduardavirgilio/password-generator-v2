@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- responsividade -->
+    <meta name="viewport" content="width=device-width" initial-scale="1.0">
+
+    <!-- SEO - search engine optmization - para o navegador indicra o site com base nas tags -->
+    <meta name="keywords" content="Gerador de senhas">
+
+    <link rel="stylesheet" href="./assets/style/password.css">
+
+    <!-- o defer espera o site carregar - como se colocasse o script no final -->
+    <script src="./assets/js/generator-password-v2.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- container principal que envolve toda a aplicação do gerador de senha -->
+    <section class="password-generator">
+
+        <!-- cabeçalho que exibe a data/hora atual e mensagem de boas vindas -->
+        <header class="password-generator__header">
+
+            <span class="password-generator__datetime"></span>
+            <span class="password-generator__welcome"></span>
+
+        </header>
+
+        <!-- area principal -->
+        <main class="password-generator__main">
+
+            <!-- logo gerator de senhas -->
+            <img class="password-generator__logo" src="./assets/img/logo-senai-sp.png" alt="logo SENAI SP"/>
+
+            <!-- container de entrada que agrupa o controle deslizante e opções de senha -->
+            <div class="password-generator__input">
+                <span class="password-generator__text">Tamanho <span class="password-generator__size"></span>caracteres</span>
+
+                <input class="password-generator__slider" type="range" min="8" max="16" value="8"/>
+                    
+                <div class="password-generator__options">
+
+                    <label class="password-generator__option" name = "uppercase-label">
+                        <input type="checkbox" class="password-generator__checkbox uppercase-check" name="uppercase" checked>
+                        Letras maiúsculas (A-Z)
+                    </label>
+
+                    <label class="password-generator__option" name = "uppercase-label">
+                        <input type="checkbox" class="password-generator__checkbox lowercase-check" name="lowercase" checked>
+                        Letras minúsculas (a-z)
+                    </label>
+
+                    <label class="password-generator__option" name = "uppercase-label">
+                        <input type="checkbox" class="password-generator__checkbox numbers-check" name="numbers" checked>
+                        Números (0-9)
+                    </label>
+
+                    <label class="password-generator__option" name = "uppercase-label">
+                        <input type="checkbox" class="password-generator__checkbox special-check" name="special" checked>
+                        Caracteres especiais (!@#$%&*)
+                    </label>
+                </div>
+            </div>
+
+            <!-- container que exibe a senha gerada e permite cópia -->
+            <div class="password-generator__result hide">
+
+            </div>
+
+            <!-- container que mantem o historico das ultimas senhas geradas -->
+            <div class="password-generator__history">
+
+            </div>
+        </main>
+    </section>
+</body>
+</html>
