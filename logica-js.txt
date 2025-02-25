@@ -1,0 +1,17 @@
+o sistema vai gerar senhas aleatorias
+
+1. obter os elementos
+
+- valor do slider 
+- valor da data e hora
+- valor do checkbox
+
+2. função que exibe a data e a hora
+
+    const dataHora = () =>{
+        
+    }
+
+3. função que gera a senha
+
+4. função que limpa
