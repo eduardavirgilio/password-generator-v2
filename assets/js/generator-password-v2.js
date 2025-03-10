@@ -70,7 +70,7 @@ sliderElement.addEventListener('input', (e) => {
 })
 
 //funcao que gera uma senha aleatoria
-const gerarSenha = () => {
+const generatePassWord = () => {
     let selectedCharset = ''; //string que armazena o conjunto de caracteres
 
     //obter os checkboxes selecionados
@@ -80,13 +80,15 @@ const gerarSenha = () => {
     const specialChecked = document.querySelector('.special-check').checked;
 
     //construir o charset baseado nas opcoes selecionados (se o primeiro for verdadeiro, ele vai descartar todas)
-    if (uppercaseChecked) selectedCharset += charsets.uppercase;
+
+    if (uppercaseChecked) selectedCharset += charsets.uppercase; 
     if (lowercaseChecked) selectedCharset += charsets.lowercase;
     if (numbersChecked) selectedCharset += charsets.numbers; 
     if (specialChecked) selectedCharset += charsets.special;
 
-    //se nenhuma opcao estiver selecionada, selecionar todas 
-    if (!selectedCharset){
+    //se nenhuma opcao estiver selecionada, selecionar todas    
+    //se usuario nao selecionar nenhuma caixinha, ele vai selecionar todas por padrao
+    if (!selectedCharset){ //o ! significa negado
         selectedCharset = Object.values(charsets).join('');
         document.querySelector('.uppercase-check').checked = true;
         document.querySelector('.lowercase-check').checked = true;
@@ -104,7 +106,7 @@ const gerarSenha = () => {
     //2. Multiplicado por o tamanho do charset para obter um numero valido
     //3. Math.floor () converte o numero em um inteiro
     //4. CharAt() retorna o caractere na posicao do indice calculado
-    pass += selectedCharset.charAt(Math.floor(Math.random() * selectedCharset.length));
+    pass += selectedCharset.charAt(Math.floor(Math.random() * selectedCharset.length)); //length é a contagem - quantas vezes arrastou o slider / o floor reduz em 1
     }
 
     //remove a classe 'hide' para exibir o container da senha gerada
@@ -117,17 +119,61 @@ const gerarSenha = () => {
     //o unshift tira e coloca o primeiro
     historicoSenhas.unshift(pass);
 
+    //no max 3 senhas no historico
     if (historicoSenhas.length > 3) {
+        //se o array for maior que 3, o pop tira o ultimo
         historicoSenhas.pop(); //o pop tira o ultimo
     }
 
+    //atualiza a lista de historico na interface
     const historico = document.querySelector('.password-generator__history');
         if (historico) {
+        //remove a classe hide para exibir o historico
         historico.style.display = 'block';
+        //cria elementos <li> para cada senha no historico
+        //1. map() transforma cada senha no historico
+        //2. join ('') concatena todos os elementos em uma unica string
         historico.querySelector('.password-generator__history-list').innerHTML = historicoSenhas
         .map(senha => `<li class = "password-generator__history-item">${senha}</li>`)
         .join('');
     }
 };
 
-buttonElement.addEventListener('click', gerarSenha);
+// Função para copiar a senha gerada para a área de transferência
+const copyPassword = () => {
+    alert('Senha copiada com sucesso!'); // Exibe um alerta de sucesso
+    navigator.clipboard.writeText(novaSenha); // Copia a senha usando a API Clipboard
+};
+
+// Adiciona os event listeners para os eventos de clique
+buttonElement.addEventListener('click', generatePassWord); // Gera nova senha
+containerPassword.addEventListener('click', copyPassword); // Copia a senha
+
+// Função para limpar os dados e esconder os containers
+const clearButton = document.querySelector('.password-generator__button--clear');
+
+const clearData = () => {
+    // Limpa o histórico de senhas
+    historicoSenhas = [];
+    novaSenha = '';
+
+    // Esconde os containers
+    containerPassword.classList.add('hide');
+    const historico = document.querySelector('.password-generator__history');
+    if (historico) {
+        historico.style.display = 'none';
+    }
+
+    // Reseta os checkboxes para o estado inicial (marcados)
+    document.querySelector('.uppercase-check').checked = true;
+    document.querySelector('.lowercase-check').checked = true;
+    document.querySelector('.numbers-check').checked = true;
+    document.querySelector('.special-check').checked = true;
+
+    // Reseta o slider para o valor inicial
+    sliderElement.value = 8;
+    sizePassword.innerHTML = '8';
+};
+
+// Adiciona o event listener para o botão de limpar
+clearButton.addEventListener('click', clearData);
